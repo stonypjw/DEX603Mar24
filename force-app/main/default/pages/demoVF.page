@@ -1,0 +1,16 @@
+<apex:page controller="vfcontroller">
+<!-- Begin Default Content REMOVE THIS -->
+<h1>Congratulations</h1>
+<b>This is your new Page</b>
+
+<apex:outputPanel id='ShowSomething'>
+    {!displaySomething}
+</apex:outputPanel>
+
+
+<apex:form>
+    <apex:commandButton title="Do Something" value="Do SOmething" action="{!doSomething}" reRender="ShowSomething"></apex:commandButton>
+</apex:form>
+
+<!-- End Default Content REMOVE THIS -->
+</apex:page>

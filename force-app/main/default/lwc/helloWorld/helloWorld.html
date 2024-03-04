@@ -1,0 +1,12 @@
+<template>
+    <template lwc:if={showAlt}>
+        <div class="GenWatt">Hello {firstName}</div>
+    </template>
+    <template lwc:elseif={showExt}>
+        <div style=" background-color: purple;">Hello {firstName}</div>
+    </template>
+    <template lwc:else>
+        <div class="myClass">Hello {firstName}</div>
+    </template>
+    
+</template>
