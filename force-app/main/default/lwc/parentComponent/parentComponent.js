@@ -2,12 +2,20 @@ import { LightningElement } from 'lwc';
 
 export default class ParentComponent extends LightningElement {
 
+    childAge = 2;
+    childTalking = 'Child';
+
     // private property to display a message on the parent component
     childSaid;
 
+    addToAge(){
+        this.childAge += 1;
+    }
+
     // method to handle the event raised by the child component
     handleFit(evt) {
-        this.childSaid = evt.detail;
+        this.childSaid = evt.detail.speak;
+        this.childTalking = evt.detail.whoisit;
     }
 
     // constructor lifecycle method

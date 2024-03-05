@@ -13,8 +13,11 @@ export default class ChildComponent extends LightningElement {
     respondToParent(event) {
         // create a custom event
         this.childSpeak = event.detail.value;
-        const myEvent = new CustomEvent('crying', { detail: this.childSpeak });
-
+        const myEvent = new CustomEvent('crying', { detail: {
+                                                           speak : this.childSpeak,
+                                                           whoisit : this.childName 
+                                                             } });
+        console.log(myEvent);
         // dispatch my custom event
         this.dispatchEvent(myEvent);
     }

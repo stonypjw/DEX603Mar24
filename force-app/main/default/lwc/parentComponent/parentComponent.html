@@ -1,7 +1,11 @@
 <template>
     <lightning-card title="Parent Component">
-        <h1>Child Said: {childSaid}</h1>
-        <c-child-component child-name="Huey" age=2 oncrying={handleFit}></c-child-component>
+        <h1>{childTalking} Said: {childSaid}</h1>
+        <lightning-button title="Happy Birthday" 
+                          label="Happy Birthday" 
+                          onclick={addToAge}>
+        </lightning-button>
+        <c-child-component child-name="Huey" age={childAge} oncrying={handleFit}></c-child-component>
         <c-child-component child-name="Luey" age=2 oncrying={handleFit}></c-child-component>
     </lightning-card>
 </template>
