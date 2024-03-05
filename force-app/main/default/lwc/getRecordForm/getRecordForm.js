@@ -8,7 +8,8 @@ import EMAIL_FIELD from '@salesforce/schema/Contact.Email';
 export default class GetRecordForm extends LightningElement {
 
     @api recordId;
-
+    @api displayTitle = 'Contact Informtion';
+    
     @wire(getRecord, { recordId: '$recordId',
                         fields: [NAME_FIELD, TITLE_FIELD, PHONE_FIELD, EMAIL_FIELD]})
     contact;
@@ -28,5 +29,8 @@ export default class GetRecordForm extends LightningElement {
     //     }
     // };
 
-
+    get title() {
+        let titleCaps = this.contact.data.fields.Title.value;
+        return titleCaps.toUpperCase();
+    }
 }

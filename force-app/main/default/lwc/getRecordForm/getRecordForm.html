@@ -1,10 +1,10 @@
 <template>
     <lightning-card
-        title="Contact Information"
+        title={displayTitle}
         icon-name="standard:contact">
     <template lwc:if={contact.data}>
         <p>Name: {contact.data.fields.Name.value}</p>
-        <p>Title: {contact.data.fields.Title.value}</p>
+        <p>Title: {title}</p>
         <p>Phone: {contact.data.fields.Phone.value}</p>
         <p>Email: {contact.data.fields.Email.value}</p>
     </template>

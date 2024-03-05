@@ -1,0 +1,11 @@
+<template>
+    <template lwc:if={contact.data}>
+        <c-get-record-form display-title="Direct Supervisor" record-id={superId}></c-get-record-form>
+    </template>
+    <template lwc:elseif={contact.error}>
+        <p>Error retrieving record.</p>
+    </template>
+    <template lwc:else>
+        <p> No contact to display! </p>
+    </template>
+</template>
