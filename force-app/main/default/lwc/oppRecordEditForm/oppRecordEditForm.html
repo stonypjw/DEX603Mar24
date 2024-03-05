@@ -1,21 +1,21 @@
 <template>
     <template lwc:if={editMode}>
         <lightning-record-edit-form
-            record-id={recordId}
-            object-api-name={objectApiName}
-            onsuccess={toggleMode}>
-            <div class="slds-grid">
-                <div class="slds-col">
-                    <lightning-input-field field-name="Name"></lightning-input-field>
-                    <lightning-input-field field-name="Amount"></lightning-input-field>
-                    <lightning-input-field field-name="MainCompetitors__c"></lightning-input-field>
-                </div>
-                <div class="slds-col">
-                    <lightning-input-field field-name="StageName"></lightning-input-field>
-                    <lightning-input-field field-name="Type"></lightning-input-field>
-                    <lightning-input-field field-name="CloseDate"></lightning-input-field>
-                </div>
+        record-id={recordId}
+        object-api-name={objectApiName}
+        onsuccess={toggleMode}>
+        <div class="slds-grid">
+            <div class="slds-col">
+                <lightning-input-field field-name="Name"></lightning-input-field>
+                <lightning-input-field field-name="Amount"></lightning-input-field>
+                <lightning-input-field field-name="MainCompetitors__c"></lightning-input-field>
             </div>
+            <div class="slds-col">
+                <lightning-input-field field-name="StageName"></lightning-input-field>
+                <lightning-input-field field-name="Type"></lightning-input-field>
+                <lightning-input-field field-name="CloseDate"></lightning-input-field>
+            </div>
+        </div>
             <lightning-button label="Save" type="submit"></lightning-button>
             <lightning-button label="Cancel" title="Cancel" onclick={toggleMode}></lightning-button>
             <c-legal-footer></c-legal-footer>
