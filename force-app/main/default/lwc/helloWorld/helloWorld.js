@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api} from 'lwc';
 import GenWattStyle from '@salesforce/resourceUrl/GenWattStyle';
 import { loadStyle } from 'lightning/platformResourceLoader';
 
@@ -19,4 +19,6 @@ export default class HelloWorld extends LightningElement {
         if(this.firstName === "John") {this.showExt = true;}
         if(this.firstName === "Dagny") {this.showAlt = true;}
     }
+
+   
 }
