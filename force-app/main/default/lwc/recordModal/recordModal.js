@@ -11,4 +11,11 @@ export default class RecordModal extends LightningModal {
     @api headerLabel;
 
 
+    handleCancel(){
+        this.close('modcancel');
+    }
+
+    handleSuccess(){
+        this.close('modsuccess');
+    }
 }

@@ -5,7 +5,9 @@
             record-id={recordId}
             object-api-name={objectApiName}
             mode={formMode}
-            layout-type={layoutType}>
+            layout-type={layoutType}
+            onsuccess={handleSuccess}
+            oncancel={handleCancel}>
         </lightning-record-form>
     </lightning-modal-body>
     <lightning-modal-footer>
