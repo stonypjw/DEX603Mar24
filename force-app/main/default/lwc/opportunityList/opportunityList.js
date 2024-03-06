@@ -10,6 +10,8 @@ export default class OpportunityList extends LightningElement {
     displayedOpps = [];
     allOpps = [];
     status = 'All';
+    totalAmount;
+    totalRecords;
 
     @track comboOptions = [
         {value: 'All', label: 'All' },
@@ -68,8 +70,9 @@ export default class OpportunityList extends LightningElement {
                 }
             }
         }
-
         this.recordsToDisplay = this.displayedOpps.length > 0 ? true : false;
+        this.totalRecords = this.displayedOpps.length;
+        this.totalAmount = this.displayedOpps.reduce((prev, curr) => prev + (isNaN(curr.Amount) ? 0 : curr.Amount), 0);
     }
 
     handleChange(event){
