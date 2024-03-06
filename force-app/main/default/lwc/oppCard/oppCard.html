@@ -1,0 +1,23 @@
+<template>
+    <lightning-card>
+        <h3 slot="title" class="slds-truncate"
+            title={name}>{name}</h3>
+        <div class="slds-tile">
+            <dl class="slds-list_horizontal slds-wrap">
+                <dt class="slds-item_label slds-text-color_weak slds-truncate"
+                    title="Stage">Stage:</dt>
+                <dd class="slds-item_detail slds-truncate" title={stage}>{stage}</dd>
+                <dt class="slds-item_label slds-text-color_weak slds-truncate"
+                    title="Amount">Amount:</dt>
+                    <dd class="slds-item_detail slds-truncate" title={amount}>
+                        <lightning-formatted-number value={amount} format-style="currency"></lightning-formatted-number>
+                    </dd>
+                <dt class="slds-item_label slds-text-color_weak slds-truncate"
+                    title="Close Date">Close Date:</dt>
+                    <dd class="slds-item_detail slds-truncate" title={closedate}>
+                        <lightning-formatted-date-time value={closedate}></lightning-formatted-date-time>
+                    </dd>
+            </dl>
+        </div>
+    </lightning-card>
+</template>
