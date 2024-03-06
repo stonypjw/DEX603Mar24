@@ -9,4 +9,5 @@ export default class OppCard extends LightningElement {
     @api closedate
     @api oppId;
 
+
 }

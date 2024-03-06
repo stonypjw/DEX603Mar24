@@ -1,6 +1,6 @@
 public with sharing class OpportunityController {
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<Opportunity> getOpportunities(String accountId){
 
         List<Opportunity> opps = new List<Opportunity>();
@@ -9,6 +9,7 @@ public with sharing class OpportunityController {
                        IsWon, IsClosed
                 FROM Opportunity
                 WHERE AccountId = :accountId WITH SECURITY_ENFORCED];
+        System.Debug(opps);
         return opps;
     }
 }

@@ -1,0 +1,17 @@
+<template>
+    <div class="slds-grid">
+<!-- Place fitler stuff and anything other buttons here-->
+
+    </div>
+    <template lwc:if={recordsToDisplay}>
+        <template for:each={displayedOpps} for:item="opp">
+            <div key={opp.id}>
+                <c-opp-card name={opp.Name} amount={opp.Amount} stage={opp.StageName}
+                            closedate={opp.CloseDate} opp-id={opp.Id}></c-opp-card>
+            </div>
+        </template>
+    </template>
+    <template lwc:else>
+        <p>No records to display...</p>
+    </template>
+</template>
