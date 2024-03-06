@@ -79,4 +79,5 @@ export default class OpportunityList extends LightningElement {
         this.status = event.detail.value;
         this.updateList();
     }
+
 }
