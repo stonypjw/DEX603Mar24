@@ -1,7 +1,11 @@
 <template>
     <div class="slds-grid">
 <!-- Place fitler stuff and anything other buttons here-->
-
+        <div class="slds-col">
+            <lightning-combobox label="Stage Filter" value={status}
+                                options={comboOptions} onchange={handleChange}>
+                            </lightning-combobox>
+        </div>
     </div>
     <template lwc:if={recordsToDisplay}>
         <template for:each={displayedOpps} for:item="opp">
