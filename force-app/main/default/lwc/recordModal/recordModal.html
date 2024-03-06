@@ -1,0 +1,14 @@
+<template>
+    <lightning-modal-header label={headerLabel}></lightning-modal-header>
+    <lightning-modal-body>
+        <lightning-record-form
+            record-id={recordId}
+            object-api-name={objectApiName}
+            mode={formMode}
+            layout-type={layoutType}>
+        </lightning-record-form>
+    </lightning-modal-body>
+    <lightning-modal-footer>
+        <c-legal-footer></c-legal-footer>
+    </lightning-modal-footer>
+</template>

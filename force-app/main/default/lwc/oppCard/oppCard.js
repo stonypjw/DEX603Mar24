@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import RecordModal from 'c/recordModal';
 
 export default class OppCard extends NavigationMixin(LightningElement) {
 
@@ -21,4 +22,14 @@ export default class OppCard extends NavigationMixin(LightningElement) {
         });
     }
 
+    editOpp(){
+        RecordModal.open({
+            size: 'small',
+            recordId: this.oppId,
+            objectApiName: 'Opportunity',
+            formMode: 'edit',
+            layoutType: 'Compact',
+            headerLabel: 'Edit Opportunity'
+        });
+    }
 }
