@@ -40,10 +40,14 @@ export default class OppCard extends NavigationMixin(LightningElement) {
                     title: 'Opportunity Saved Succesfully',
                     message: 'The opportunity was updated successfully',
                     variant: 'success',
-                    mode: 'dissmissible'
+                    mode: 'dismissible'
                 });
 
                 this.dispatchEvent(myToast);
+
+                //passes success event up to opportunitylist so that data cache can be refreshed
+                const savedEvent = new CustomEvent('modsaved');
+                this.dispatchEvent(savedEvent);
             }
         })
     }

@@ -23,7 +23,7 @@
         <template for:each={displayedOpps} for:item="opp">
             <div key={opp.id}>
                 <c-opp-card name={opp.Name} amount={opp.Amount} stage={opp.StageName}
-                            closedate={opp.CloseDate} opp-id={opp.Id}></c-opp-card>
+                            closedate={opp.CloseDate} opp-id={opp.Id} onmodsaved={refreshWire}></c-opp-card>
             </div>
         </template>
     </template>

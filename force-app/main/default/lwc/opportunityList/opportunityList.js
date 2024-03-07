@@ -2,6 +2,7 @@ import { LightningElement, api, wire, track } from 'lwc';
 import getOpportunities from '@salesforce/apex/OpportunityController.getOpportunities';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import STAGE_FIELD from '@salesforce/schema/Opportunity.StageName';
+import { refreshApex } from '@salesforce/apex';
 
 export default class OpportunityList extends LightningElement {
 
@@ -98,4 +99,7 @@ export default class OpportunityList extends LightningElement {
         this.updateList();
     }
 
+    refreshWire(){
+        refreshApex(this.results);
+    }
 }
