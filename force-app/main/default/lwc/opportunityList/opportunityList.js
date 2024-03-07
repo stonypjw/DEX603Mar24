@@ -7,6 +7,8 @@ import OPPAMOUNT_FIELD from '@salesforce/schema/Opportunity.Amount';
 import OPPCLOSEDATE_FIELD from '@salesforce/schema/Opportunity.CloseDate';
 import { refreshApex } from '@salesforce/apex';
 import { subscribe, unsubscribe } from 'lightning/empApi';
+import { updateRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class OpportunityList extends LightningElement {
 
@@ -25,12 +27,12 @@ export default class OpportunityList extends LightningElement {
 
     tableMode = false;
     selectedMode = 'card';
-
+    draftChanges = [];
     tableCols = [
         { label: 'Opp Name', fieldName: OPPNAME_FIELD.fieldApiName, type: 'text' },
-        { label: 'Amount', fieldName: OPPAMOUNT_FIELD.fieldApiName, type: 'currency' },
+        { label: 'Amount', fieldName: OPPAMOUNT_FIELD.fieldApiName, type: 'currency', editable: true },
         { label: 'Stage', fieldName: STAGE_FIELD.fieldApiName, type: 'text' },
-        { label: 'Close Date', fieldName: OPPCLOSEDATE_FIELD.fieldApiName, type: 'date' }
+        { label: 'Close Date', fieldName: OPPCLOSEDATE_FIELD.fieldApiName, type: 'date', editable: true }
     ];
 
     get modeOptions() {
@@ -169,5 +171,42 @@ export default class OpportunityList extends LightningElement {
 
     handleUnSubscribe(){
         unsubscribe(this.subscription, response => {console.log('OppList unsubscribed')});
+    }
+
+    handleTableSave(event) {
+        this.draftChanges = event.detail.draftValues;
+        console.log(this.draftChanges);
+
+        const inputItems = this.draftChanges.slice().map(draft => {
+            var fields = Object.assign({}, draft);
+            return { fields };
+        });
+
+        console.log(JSON.stringify(inputItems));
+
+        const promises = inputItems.map(recordInput => updateRecord(recordInput));
+
+        Promise.all(promises)
+           .then( result => {
+              this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Success',
+                    message: 'Records successfully updated!',
+                    variant: 'success'
+                })
+              );
+           })
+           .catch( error => {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error',
+                    message: 'Records were NOT updated!',
+                    variant: 'error'
+                })
+              );
+           })
+           .finally(() => {
+            this.draftChanges = [];
+           });
     }
 }
