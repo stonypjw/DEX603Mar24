@@ -31,7 +31,7 @@
         <template lwc:if={tableMode}>
             <div class="slds-border_top slds-border_bottom slds-border_left slds-border_right">
                 <lightning-datatable data={displayedOpps} key-field="Id" columns={tableCols}
-                hide-checkbox-column draft-values={draftChanges} onsave={handleTableSave}></lightning-datatable>
+                hide-checkbox-column draft-values={draftChanges} onsave={handleTableSave} onrowaction={handleRowAction}></lightning-datatable>
             </div>
             
         </template>

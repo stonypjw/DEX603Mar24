@@ -9,8 +9,15 @@ import { refreshApex } from '@salesforce/apex';
 import { subscribe, unsubscribe } from 'lightning/empApi';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import RecordModal from 'c/recordModal';
+import { NavigationMixin } from 'lightning/navigation';
 
-export default class OpportunityList extends LightningElement {
+const tableactions = [
+    { label: 'Show Details', name: 'show_details' },
+    { label: 'Quick Edit', name: 'quick_edit' },
+];
+
+export default class OpportunityList extends NavigationMixin(LightningElement) {
 
     @api recordId;
     results;
@@ -28,12 +35,19 @@ export default class OpportunityList extends LightningElement {
     tableMode = false;
     selectedMode = 'card';
     draftChanges = [];
+
     tableCols = [
         { label: 'Opp Name', fieldName: OPPNAME_FIELD.fieldApiName, type: 'text' },
         { label: 'Amount', fieldName: OPPAMOUNT_FIELD.fieldApiName, type: 'currency', editable: true },
         { label: 'Stage', fieldName: STAGE_FIELD.fieldApiName, type: 'text' },
-        { label: 'Close Date', fieldName: OPPCLOSEDATE_FIELD.fieldApiName, type: 'date', editable: true }
+        { label: 'Close Date', fieldName: OPPCLOSEDATE_FIELD.fieldApiName, type: 'date', editable: true },
+        {
+            type: 'action',
+            typeAttributes: { rowActions: tableactions },
+        }
     ];
+
+
 
     get modeOptions() {
         return [
@@ -208,5 +222,50 @@ export default class OpportunityList extends LightningElement {
            .finally(() => {
             this.draftChanges = [];
            });
+    }
+
+    handleRowAction(event){
+        const actionName = event.detail.action.name;
+        const row = event.detail.row;
+        switch (actionName) {
+            case 'quick_edit':
+                RecordModal.open({
+                    size: 'small',
+                    recordId: row.Id,
+                    objectApiName: 'Opportunity',
+                    formMode: 'edit',
+                    layoutType: 'Compact',
+                    headerLabel: 'Edit Opportunity'
+                })
+                .then((result) => {
+                    console.log(result);
+        
+                    if(result === 'modsuccess'){
+                        const myToast = new ShowToastEvent({
+                            title: 'Opportunity Saved Succesfully',
+                            message: 'The opportunity was updated successfully',
+                            variant: 'success',
+                            mode: 'dismissible'
+                        });
+        
+                        this.dispatchEvent(myToast);
+        
+                        //passes success event up to opportunitylist so that data cache can be refreshed
+                        const savedEvent = new CustomEvent('modsaved');
+                        this.dispatchEvent(savedEvent);
+                    }
+                });
+                break;
+            case 'show_details':
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__recordPage',
+                    attributes: {
+                        recordId: row.Id,
+                        actionName: 'view'
+                    }
+                });
+                break;
+            default:
+        }
     }
 }
