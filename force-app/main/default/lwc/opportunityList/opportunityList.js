@@ -1,5 +1,7 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import getOpportunities from '@salesforce/apex/OpportunityController.getOpportunities';
+import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import STAGE_FIELD from '@salesforce/schema/Opportunity.StageName';
 
 export default class OpportunityList extends LightningElement {
 
@@ -17,9 +19,22 @@ export default class OpportunityList extends LightningElement {
         {value: 'All', label: 'All' },
         {value: 'Open', label: 'Open' },
         {value: 'Closed', label: 'Closed' },
-        {value: 'ClosedWon', label: 'Closed Won' },
-        {value: 'ClosedLost', label: 'Closed Lost' }
+        {value: 'ClosedWon', label: 'All Won' },
+        {value: 'ClosedLost', label: 'All Lost' }
      ];
+
+     @wire(getPicklistValues, { recordTypeId: '012000000000000AAA' , fieldApiName: STAGE_FIELD })
+     wirePicklist({ data, error }) {
+        if(data) {
+            for (let item of data.values){
+                this.comboOptions.push({value: item.value, label: item.label});
+            }
+            this.comboOptions = this.comboOptions.slice();
+        }
+        if(error){
+            console.error('Error retrieving picklist values from StageName');
+        }
+     }
 
     @wire(getOpportunities, { accountId: '$recordId' })
     wiredOpps(oppRecords){
@@ -45,7 +60,7 @@ export default class OpportunityList extends LightningElement {
         if(this.status === 'All'){
             this.displayedOpps = this.allOpps;
         }
-        else {
+        else {  //Need to add logic to match to stage names
             for (let i=0; i < this.allOpps.length; i++){
                 currentRecord = this.allOpps[i];
                 if( this.status === 'Open'){
@@ -67,6 +82,9 @@ export default class OpportunityList extends LightningElement {
                     if(!currentRecord.IsWon && currentRecord.isClosed) {
                         this.displayedOpps.push(currentRecord);
                     }
+                }
+                else if ( this.status === currentRecord.StageName ){
+                    this.displayedOpps.push(currentRecord);
                 }
             }
         }
