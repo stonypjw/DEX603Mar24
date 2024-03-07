@@ -3,6 +3,7 @@ import getOpportunities from '@salesforce/apex/OpportunityController.getOpportun
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import STAGE_FIELD from '@salesforce/schema/Opportunity.StageName';
 import { refreshApex } from '@salesforce/apex';
+import { subscribe, unsubscribe } from 'lightning/empApi';
 
 export default class OpportunityList extends LightningElement {
 
@@ -16,6 +17,9 @@ export default class OpportunityList extends LightningElement {
     totalAmount;
     totalRecords;
 
+    channelName = '/topic/Opportunities';
+    subscription = {};
+
     @track comboOptions = [
         {value: 'All', label: 'All' },
         {value: 'Open', label: 'Open' },
@@ -24,6 +28,16 @@ export default class OpportunityList extends LightningElement {
         {value: 'ClosedLost', label: 'All Lost' }
      ];
 
+     //Life Cycle Event Handlers
+    connectedCallback(){
+        this.handleSubscribe();
+    }
+
+    disconnectedCallback(){
+        this.handleUnSubscribe();
+    }
+
+     //Data Wires
      @wire(getPicklistValues, { recordTypeId: '012000000000000AAA' , fieldApiName: STAGE_FIELD })
      wirePicklist({ data, error }) {
         if(data) {
@@ -101,5 +115,28 @@ export default class OpportunityList extends LightningElement {
 
     refreshWire(){
         refreshApex(this.results);
+    }
+
+    //Susbcription Management
+    handleSubscribe(){
+        const messageCallback = response => {
+            //Check for deletion as a seperate event
+            if( response.data.event.type === 'deleted'){
+                if (this.allOpps.find(elem => { return elem.Id === response.data.sObject.Id})){
+                    console.log('Found a delete');
+                    this.refreshWire();
+                }
+            } 
+            else if (response.data.sobject.AccountId === this.recordId){
+                this.refreshWire();
+            }
+        }
+
+        subscribe(this.channelName, -1, messageCallback)
+          .then(response => { this.subscription = response });
+    }
+
+    handleUnSubscribe(){
+        unsubscribe(this.subscription, response => {console.log('OppList unsubscribed')});
     }
 }
