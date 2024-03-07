@@ -2,6 +2,9 @@ import { LightningElement, api, wire, track } from 'lwc';
 import getOpportunities from '@salesforce/apex/OpportunityController.getOpportunities';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import STAGE_FIELD from '@salesforce/schema/Opportunity.StageName';
+import OPPNAME_FIELD from '@salesforce/schema/Opportunity.Name';
+import OPPAMOUNT_FIELD from '@salesforce/schema/Opportunity.Amount';
+import OPPCLOSEDATE_FIELD from '@salesforce/schema/Opportunity.CloseDate';
 import { refreshApex } from '@salesforce/apex';
 import { subscribe, unsubscribe } from 'lightning/empApi';
 
@@ -22,6 +25,13 @@ export default class OpportunityList extends LightningElement {
 
     tableMode = false;
     selectedMode = 'card';
+
+    tableCols = [
+        { label: 'Opp Name', fieldName: OPPNAME_FIELD.fieldApiName, type: 'text' },
+        { label: 'Amount', fieldName: OPPAMOUNT_FIELD.fieldApiName, type: 'currency' },
+        { label: 'Stage', fieldName: STAGE_FIELD.fieldApiName, type: 'text' },
+        { label: 'Close Date', fieldName: OPPCLOSEDATE_FIELD.fieldApiName, type: 'date' }
+    ];
 
     get modeOptions() {
         return [
