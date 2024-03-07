@@ -20,6 +20,27 @@ export default class OpportunityList extends LightningElement {
     channelName = '/topic/Opportunities';
     subscription = {};
 
+    tableMode = false;
+    selectedMode = 'card';
+
+    get modeOptions() {
+        return [
+            { label: 'Card', value: 'card' },
+            { label: 'Table', value: 'table' },
+        ];
+    }
+
+    modeChange(event){
+        this.selectedMode = event.detail.value;
+        if(this.selectedMode === 'card'){
+            this.tableMode = false;
+        }
+        else {
+            this.tableMode = true;
+        }
+    }
+
+
     @track comboOptions = [
         {value: 'All', label: 'All' },
         {value: 'Open', label: 'Open' },
