@@ -122,8 +122,8 @@ export default class OpportunityList extends LightningElement {
         const messageCallback = response => {
             //Check for deletion as a seperate event
             if( response.data.event.type === 'deleted'){
-                if (this.allOpps.find(elem => { return elem.Id === response.data.sObject.Id})){
-                    console.log('Found a delete');
+                console.log('Found a delete');
+                if (this.allOpps.find(elem => { return elem.Id === response.data.sobject.Id})){
                     this.refreshWire();
                 }
             } 
