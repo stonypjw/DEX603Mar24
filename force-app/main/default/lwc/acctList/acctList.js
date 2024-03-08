@@ -1,6 +1,7 @@
 import { LightningElement, wire } from 'lwc';
 import getTopAccounts from '@salesforce/apex/AccountController.getTopAccounts';
-
+import RecordModal from 'c/recordModal';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class AcctList extends LightningElement {
 
@@ -22,4 +23,25 @@ export default class AcctList extends LightningElement {
         }
     }
 
+  // create a method to create a new Account Record
+  createAcct() {
+    // use our RecordModal component
+    RecordModal.open({
+        size: 'small',
+        objectApiName: 'Account',
+        formMode: 'edit',
+        layoutType: 'Full',
+        headerLabel: 'Create New Account'
+    })
+        .then((result) => {
+            if (result === 'modsuccess') {
+                this.dispatchEvent(new ShowToastEvent({
+                    title: 'Account Created',
+                    message: 'Accoun created successfully!',
+                    variant: 'success',
+                    mode: 'dismissible'
+                }));
+            }
+        });
+}
 }
