@@ -1,0 +1,20 @@
+<template>
+    <lightning-card>
+        <h3 slot="title" title={name}><a onclick={handleSelect}>{name}</a></h3>
+        <div class="slds-tile">
+            <div class="slds-tile__detail slds-m-left_medium">
+                <dl class="slds-list_horizontal slds-wrap">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Annual Revenue">Annual Revenue:</dt>
+                    <dd class="slds-item_detail slds-truncate" title={annualRevenue}>
+                        <lightning-formatted-number value={annualRevenue} format-style="currency"></lightning-formatted-number>
+                    </dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Phone">Phone:</dt>
+                    <dd class="slds-item_detail slds-truncate" title={phone}>
+                        <lightning-formatted-phone value={phone}></lightning-formatted-phone>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+    </lightning-card>
+</template>
