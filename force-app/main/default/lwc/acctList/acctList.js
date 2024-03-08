@@ -37,7 +37,7 @@ export default class AcctList extends LightningElement {
             if (result === 'modsuccess') {
                 this.dispatchEvent(new ShowToastEvent({
                     title: 'Account Created',
-                    message: 'Accoun created successfully!',
+                    message: 'Account created successfully!',
                     variant: 'success',
                     mode: 'dismissible'
                 }));
