@@ -15,6 +15,33 @@
                 </dl>
             </div>
         </div>
+        <template lwc:if={loadingContacts}>
+            <lightning-spinner alternative-text="Loading contacts..."></lightning-spinner>
+        </template>
+        <template lwc:if={showContacts}>
+            <template for:each={contacts} for:item="con">
+                <div key={con.Id} class="slds-m-left_large">
+                    <ul class="slds-list_horizontal slds-has-dividers_right">
+                        <li class="slds-item">
+                            <lightning-icon icon-name="standard:contact" size="xx-small"></lightning-icon>
+                        </li>
+                        <li class="slds-item">
+                           {con.Name}
+                        </li>
+                        <li class="slds-item">
+                            {con.Title}
+                        </li>
+                        <li class="slds-item">
+                            <lightning-formatted-email value={con.Email}></lightning-formatted-email>
+                        </li>
+                    </ul>
+                </div>
+            </template>
+        </template>
+        <div slot="actions">
+            <lightning-icon title="Contacts" icon-name="standard:contact_list" onclick={displayContacts}>
 
+            </lightning-icon>
+        </div>
     </lightning-card>
 </template>
